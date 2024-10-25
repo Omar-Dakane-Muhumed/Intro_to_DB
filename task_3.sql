@@ -1,6 +1,7 @@
 
-use database alx_book_store
+
 SHOW TABLES;
 
 
+mysql -u root -p -D alx_book_store < task_3.sql
 
