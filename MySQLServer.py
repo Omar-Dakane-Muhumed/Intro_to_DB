@@ -1,6 +1,6 @@
+
 import mysql.connector
 from mysql.connector import Error
-
 
 def create_database():
     try:
@@ -17,15 +17,22 @@ def create_database():
             print("Database 'alx_book_store' created successfully!")
 
     except Error as e:
-        print(f"Error: {e}")
+        if e.errno == 1045:
+            print("Access denied: Check your username or password.")
+        elif e.errno == 2003:
+            print("Can't connect to MySQL server on the specified host.")
+        else:
+            print(f"Unexpected error occurred: {e}")
 
     finally:
         # Close the cursor and connection to free resources
-        if connection.is_connected():
-            cursor.close()
-            connection.close()
-            print("MySQL connection is closed")
-
+        try:
+            if connection.is_connected():
+                cursor.close()
+                connection.close()
+                print("MySQL connection is closed")
+        except NameError:
+            print("Connection was not established, so there's nothing to close.")
 
 if __name__ == "__main__":
     create_database()
