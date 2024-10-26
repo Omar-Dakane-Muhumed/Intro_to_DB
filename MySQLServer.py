@@ -1,5 +1,4 @@
 
-
 import mysql.connector
 from mysql.connector import Error
 
@@ -25,7 +24,7 @@ def create_database():
             else:
                 print("Error: Database 'alx_book_store' could not be confirmed.")
 
-    except Error as e:
+    except mysql.connector.Error as e:
         if e.errno == 1045:
             print("Access denied: Check your username or password.")
         elif e.errno == 2003:
