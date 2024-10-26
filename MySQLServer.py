@@ -1,4 +1,5 @@
 
+
 import mysql.connector
 from mysql.connector import Error
 
@@ -14,7 +15,15 @@ def create_database():
         if connection.is_connected():
             cursor = connection.cursor()
             cursor.execute("CREATE DATABASE IF NOT EXISTS alx_book_store")
-            print("Database 'alx_book_store' created successfully!")
+            print("Database 'alx_book_store' created successfully or already exists!")
+
+            # Check if the database exists
+            cursor.execute("SHOW DATABASES")
+            databases = cursor.fetchall()
+            if ('alx_book_store',) in databases:
+                print("Confirmation: Database 'alx_book_store' exists.")
+            else:
+                print("Error: Database 'alx_book_store' could not be confirmed.")
 
     except Error as e:
         if e.errno == 1045:
